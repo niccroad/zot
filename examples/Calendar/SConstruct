@@ -1,0 +1,23 @@
+import os, sys
+sys.path.insert(0, os.path.abspath('../../zot'))
+
+import zot
+zot = zot.ZotCodeGenerator()
+zot.generateTestCode('CalendarPrinterTest.cpp',
+                     'build/source/CalendarPrinterTest.cpp',
+                     ['../../googletest-release-1.8.0/googletest/include'])
+
+env = Environment()
+
+example_lib = env.StaticLibrary(target = 'build/objects/Code',
+                                source = ['CalendarPrinter.cpp'])
+                                                           
+test_objects = env.Object(target = 'build/objects/Tests',
+                          source = ['build/source/CalendarPrinterTest.cpp'],
+                          CPPPATH = ['../../include',
+                                     '../../googletest-release-1.8.0/googletest/include'])
+
+env.Program(target = 'build/CalendarPrinterTests',
+            source = [test_objects, example_lib],
+            LIBS = ['../../googletest-release-1.8.0/googletest/Release/gtest.lib',
+                    '../../googletest-release-1.8.0/googletest/Release/gtest_main.lib'])

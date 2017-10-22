@@ -1,0 +1,20 @@
+import os, sys
+sys.path.insert(0, os.path.abspath('../../zot'))
+
+import zot
+zot = zot.ZotCodeGenerator()
+zot.generateTestCode('EmailerTest.cpp', 'EmailerTest-gen.cpp')
+
+env = Environment()
+
+emailer_lib = env.StaticLibrary(target = 'build/Objects',
+                                source = ['Emailer.cpp', 'Singleton.cpp'],
+                                CPPPATH = '../../include')
+                                                           
+test_objects = env.Object(target = 'build/objects/Main',
+                          source = ['EmailerTest-gen.cpp'],
+                          CPPPATH = ['../../include', '../../googletest-release-1.8.0/googletest/include'])
+
+env.Program(target = 'EmailerTests',
+            source = [test_objects, emailer_lib],
+            LIBS = ['../../googletest-release-1.8.0/googletest/Release/gtest.lib', '../../googletest-release-1.8.0/googletest/Release/gtest_main.lib'])
