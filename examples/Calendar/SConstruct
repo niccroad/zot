@@ -11,7 +11,7 @@ env = Environment()
 
 example_lib = env.StaticLibrary(target = 'build/objects/Code',
                                 source = ['CalendarPrinter.cpp'])
-                                                           
+
 test_objects = env.Object(target = 'build/objects/Tests',
                           source = ['build/source/CalendarPrinterTest.cpp'],
                           CPPPATH = ['../../include',
