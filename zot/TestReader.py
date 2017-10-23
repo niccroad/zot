@@ -185,7 +185,6 @@ class TestReader(object):
                     if openIndex != -1:
                         methodBody = self._retrieveBlock(line[openIndex + 1:], bodyStartIter, '{', '}')
                         someMethod['method_body'] = methodBody[:-1]
-                        print(methodBody)
                         break
                             
     def _writeIncludeOrStub(self,
