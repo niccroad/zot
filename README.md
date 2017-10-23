@@ -1,4 +1,4 @@
-# ConditionalTest [![Build Status](https://travis-ci.org/niccroad/Archie.svg?branch=master)](https://travis-ci.org/niccroad/Archie)
+# ConditionalTest [![Build Status](https://travis-ci.org/niccroad/zot.svg?branch=master)](https://travis-ci.org/niccroad/zot)
 Test C/C++ code without hastle and modification.
 
 ConditionalTest uses the C++ preprocessor #include mechanism to introduce compile time mocks
@@ -68,22 +68,22 @@ This is then compiled into the explicit test code.
 namespace {
 #ifndef Math_h
 #define Math_h
-	class Math {
-		static double PI() {
-			return 3.14159;
-		}
-	};    
+    class Math {
+        static double PI() {
+            return 3.14159;
+        }
+    };
 #endif // Math_h
 
     #include "Angle.h"
     #include "Angle.cpp"
 }
 
-class AngleTest {
+class AngleTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(AngleTest);
     CPPUNIT_TEST(testDegreesToRadians);
-    CPPUNIT_TEST_END();
-    
+    CPPUNIT_TEST_SUITE_END();
+
 public:
     void testDegreesToRadians() {
         Angle angle;
