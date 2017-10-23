@@ -2,7 +2,7 @@ language: python
 python:
   - 2.7
 install:
-  - pip install pyyaml pytest pytest-cov
+  - pip install cppHeaderParser pyyaml pytest pytest-cov
 script: python -m unittest discover -s zot
 branches:
   only:
