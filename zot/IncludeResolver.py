@@ -27,12 +27,12 @@ class IncludeResolver(object):
                 return files[0]
 
     def rewriteInclude(self, includeFile):
-        match = re.match('\s*["<](.*)[">]\s*', includeFile)
+        match = re.match('\s*"(.*)"\s*', includeFile)
         if match == None:
-            return None
+            return includeFile
         files = glob.glob('%s/%s' % (self._fileDirectory, match.group(1)))
         if len(files) > 0:
-            return '"' + os.path.join(self._relativePath, match.group(1)) + '"'
+            return '"' + self._joinHeaderPaths(self._relativePath, match.group(1)) + '"'
         return includeFile
 
     def relativePathFileName(self, filePath):
@@ -40,3 +40,11 @@ class IncludeResolver(object):
             return os.path.join(self._relativePath, filePath)
         else:
             return filePath
+
+    def _joinHeaderPaths(self, firstPath, secondPath):
+        if firstPath == '.':
+            return secondPath
+        elif firstPath.endswith('/'):
+            return firstPath + secondPath
+        else:
+            return firstPath + '/' + secondPath
